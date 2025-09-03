@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Section -->
+        <div id="login-section" class="login-container">
+            <h2>Hospital System Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div id="login-error" class="error"></div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="container hidden">
+            <header>
+                <h1>Hospital Management System</h1>
+                <button id="logout-btn">Logout</button>
+            </header>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="doctors">Doctors</div>
+                <div class="tab" data-tab="patients">Patients</div>
+                <div class="tab" data-tab="consultations">Consultations</div>
+            </div>
+
+            <!-- Doctors Tab -->
+            <div id="doctors-tab" class="tab-content active">
+                <div class="card">
+                    <h2>Doctors Management</h2>
+                    
+                    <div class="action-buttons">
+                        <button id="get-all-doctors">Get All Doctors</button>
+                        <button id="get-doctor-by-id">Get Doctor by ID</button>
+                        <button id="show-create-doctor">Create New Doctor</button>
+                        <button id="show-update-doctor">Update Doctor</button>
+                        <button id="show-delete-doctor" class="delete">Delete Doctor</button>
+                    </div>
+
+                    <!-- Get Doctor by ID Form -->
+                    <div id="get-doctor-form" class="card hidden">
+                        <h3>Get Doctor by ID</h3>
+                        <div class="form-group">
+                            <label for="doctor-id">Doctor ID:</label>
+                            <input type="number" id="doctor-id" min="1">
+                        </div>
+                        <button id="fetch-doctor">Fetch Doctor</button>
+                        <div id="doctor-result" class="card hidden"></div>
+                    </div>
+
+                    <!-- Create Doctor Form -->
+                    <div id="create-doctor-form" class="card hidden">
+                        <h3>Create New Doctor</h3>
+                        <form id="doctor-form">
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="doctor-name">Name:</label>
+                                    <input type="text" id="doctor-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctor-dob">Date of Birth:</label>
+                                    <input type="text" id="doctor-dob" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="doctor-email">Email:</label>
+                                    <input type="text" id="doctor-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctor-phone">Phone:</label>
+                                    <input type="text" id="doctor-phone" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="doctor-cpf">CPF:</label>
+                                    <input type="text" id="doctor-cpf" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="doctor-password">Password:</label>
+                                    <input type="password" id="doctor-password" required>
+                                </div>
+                            </div>
+                            <button type="submit">Create Doctor</button>
+                        </form>
+                    </div>
+
+                    <!-- Update Doctor Form -->
+                    <div id="update-doctor-form" class="card hidden">
+                        <h3>Update Doctor</h3>
+                        <form id="doctor-update-form">                            
+                            <div class="form-group">
+                                <label for="update-doctor-id">Doctor ID:</label>
+                                <input type="number" id="update-doctor-id" required>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-doctor-name">Name:</label>
+                                    <input type="text" id="update-doctor-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-doctor-dob">Date of Birth:</label>
+                                    <input type="text" id="update-doctor-dob" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-doctor-email">Email:</label>
+                                    <input type="text" id="update-doctor-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-doctor-phone">Phone:</label>
+                                    <input type="text" id="update-doctor-phone" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-doctor-cpf">CPF:</label>
+                                    <input type="text" id="update-doctor-cpf" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-doctor-password">Password:</label>
+                                    <input type="password" id="update-doctor-password" required>
+                                </div>
+                            </div>
+                            <button type="submit">Update Doctor</button>
+                        </form>
+                    </div>
+
+                    <!-- Delete Doctor Form -->
+                    <div id="delete-doctor-form" class="card hidden">
+                        <h3>Delete Doctor</h3>
+                        <div class="form-group">
+                            <label for="delete-doctor-id">Doctor ID:</label>
+                            <input type="number" id="delete-doctor-id" min="1">
+                        </div>
+                        <button id="delete-doctor" class="delete">Delete Doctor</button>
+                    </div>
+
+                    <!-- Doctors Table -->
+                    <div id="doctors-table-container" class="hidden">
+                        <h3>Doctors List</h3>
+                        <table id="doctors-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>CPF</th>
+                                    <th>Date of Birth</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Tab -->
+            <div id="patients-tab" class="tab-content">
+                <div class="card">
+                    <h2>Patients Management</h2>
+                    
+                    <div class="action-buttons">
+                        <button id="get-all-patients">Get All Patients</button>
+                        <button id="get-patient-by-id">Get Patient by ID</button>
+                        <button id="show-create-patient">Create New Patient</button>
+                        <button id="show-update-patient">Update Patient</button>
+                        <button id="show-delete-patient" class="delete">Delete Patient</button>
+                    </div>
+
+                    <!-- Get Patient by ID Form -->
+                    <div id="get-patient-form" class="card hidden">
+                        <h3>Get Patient by ID</h3>
+                        <div class="form-group">
+                            <label for="patient-id">Patient ID:</label>
+                            <input type="number" id="patient-id" min="1">
+                        </div>
+                        <button id="fetch-patient">Fetch Patient</button>
+                        <div id="patient-result" class="card hidden"></div>
+                    </div>
+
+                    <!-- Create Patient Form -->
+                    <div id="create-patient-form" class="card hidden">
+                        <h3>Create New Patient</h3>
+                        <form id="patient-form">
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="patient-name">Name:</label>
+                                    <input type="text" id="patient-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="patient-dob">Date of Birth:</label>
+                                    <input type="text" id="patient-dob" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="patient-email">Email:</label>
+                                    <input type="text" id="patient-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="patient-phone">Phone:</label>
+                                    <input type="text" id="patient-phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="patient-cpf">CPF:</label>
+                                <input type="text" id="patient-cpf" required>
+                            </div>
+                            <button type="submit">Create Patient</button>
+                        </form>
+                    </div>
+
+                    <!-- Update Patient Form -->
+                    <div id="update-patient-form" class="card hidden">
+                        <h3>Update Patient</h3>
+                        <form id="patient-update-form">
+                            <div class="form-group">
+                                <label for="update-patient-id">Patient ID:</label>
+                                <input type="number" id="update-patient-id" required>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-patient-name">Name:</label>
+                                    <input type="text" id="update-patient-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-patient-dob">Date of Birth:</label>
+                                    <input type="text" id="update-patient-dob" required>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-patient-email">Email:</label>
+                                    <input type="text" id="update-patient-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-patient-phone">Phone:</label>
+                                    <input type="text" id="update-patient-phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="update-patient-cpf">CPF:</label>
+                                <input type="text" id="update-patient-cpf" required>
+                            </div>
+                            <button type="submit">Update Patient</button>
+                        </form>
+                    </div>
+
+                    <!-- Delete Patient Form -->
+                    <div id="delete-patient-form" class="card hidden">
+                        <h3>Delete Patient</h3>
+                        <div class="form-group">
+                            <label for="delete-patient-id">Patient ID:</label>
+                            <input type="number" id="delete-patient-id" min="1">
+                        </div>
+                        <button id="delete-patient" class="delete">Delete Patient</button>
+                    </div>
+
+                    <!-- Patients Table -->
+                    <div id="patients-table-container" class="hidden">
+                        <h3>Patients List</h3>
+                        <table id="patients-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>CPF</th>
+                                    <th>Date of Birth</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consultations Tab -->
+            <div id="consultations-tab" class="tab-content">
+                <div class="card">
+                    <h2>Consultations Management</h2>
+                    
+                    <div class="action-buttons">
+                        <button id="get-all-consultations">Get All Consultations</button>
+                        <button id="get-consultation-by-id">Get Consultation by ID</button>
+                        <button id="show-create-consultation">Create New Consultation</button>
+                        <button id="show-update-consultation">Update Consultation</button>
+                        <button id="show-delete-consultation" class="delete">Delete Consultation</button>
+                    </div>
+
+                    <!-- Get Consultation by ID Form -->
+                    <div id="get-consultation-form" class="card hidden">
+                        <h3>Get Consultation by ID</h3>
+                        <div class="form-group">
+                            <label for="consultation-id">Consultation ID:</label>
+                            <input type="number" id="consultation-id" min="1">
+                        </div>
+                        <button id="fetch-consultation">Fetch Consultation</button>
+                        <div id="consultation-result" class="card hidden"></div>
+                    </div>
+
+                    <!-- Create Consultation Form -->
+                    <div id="create-consultation-form" class="card hidden">
+                        <h3>Create New Consultation</h3>
+                        <form id="consultation-form">
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="consultation-doctor-id">Doctor ID:</label>
+                                    <input type="number" id="consultation-doctor-id" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="consultation-patient-id">Patient ID:</label>
+                                    <input type="number" id="consultation-patient-id" min="1" required>
+                                </div>
+                            </div>
+                            <button type="submit">Create Consultation</button>
+                        </form>
+                    </div>
+
+                    <!-- Update Consultation Form -->
+                    <div id="update-consultation-form" class="card hidden">
+                        <h3>Update Consultation</h3>
+                        <form id="consultation-update-form">
+                            <div class="form-group">
+                                <label for="update-consultation-id">Consultation ID:</label>
+                                <input type="number" id="update-consultation-id" required>
+                            </div>
+                            <div class="flex-row">
+                                <div class="form-group">
+                                    <label for="update-consultation-doctor-id">Doctor ID:</label>
+                                    <input type="number" id="update-consultation-doctor-id" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="update-consultation-patient-id">Patient ID:</label>
+                                    <input type="number" id="update-consultation-patient-id" min="1" required>
+                                </div>
+                            </div>
+                            <button type="submit">Update Consultation</button>
+                        </form>
+                    </div>
+
+                    <!-- Delete Consultation Form -->
+                    <div id="delete-consultation-form" class="card hidden">
+                        <h3>Delete Consultation</h3>
+                        <div class="form-group">
+                            <label for="delete-consultation-id">Consultation ID:</label>
+                            <input type="number" id="delete-consultation-id" min="1">
+                        </div>
+                        <button id="delete-consultation" class="delete">Delete Consultation</button>
+                    </div>
+
+                    <!-- Consultations Table -->
+                    <div id="consultations-table-container" class="hidden">
+                        <h3>Consultations List</h3>
+                        <table id="consultations-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Doctor ID</th>
+                                    <th>Patient ID</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
