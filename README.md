@@ -1,6 +1,6 @@
 # 🏥 HospitalSystem
 
-HospitalSystem is a **REST API** built with **PHP** following the **MVC architecture**.  
+HospitalSystem is a **REST API** built with **PHP** following the **MVC architecture** and a **JWT Token** for autentication.  
 It includes a simple **front-end** and integrates with a **MySQL database** to manage hospital data.
 
 ## 🚀 Features
@@ -9,12 +9,14 @@ It includes a simple **front-end** and integrates with a **MySQL database** to m
 - Many-to-many relationship between doctors and patients (via a junction table).
 - RESTful endpoints for data access.
 - Basic front-end to interact with the API.
+- Autentication with JWT Token.
 
 ## 🛠️ Technologies
 - **PHP**
 - **MySQL**
 - **MVC architecture**
 - **HTML / CSS / JavaScript** (front-end)
+- **JWT TOKEN**
 
 ## 📂 Database Structure
 - `doctors` – stores doctor information  
